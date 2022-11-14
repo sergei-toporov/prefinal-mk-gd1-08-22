@@ -2,9 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-///     List of the game states.
-/// </summary>
 public enum GameStates
 {
     MainMenu,
@@ -13,19 +10,19 @@ public enum GameStates
     PauseScreen,
 }
 
-/// <summary>
-///     GameManager instance.
-/// </summary>
 public class GameManager : MonoBehaviour
 {
+    protected static GameManager manager;
+    public static GameManager Manager { get => manager; }
 
-    private GameStates gameState;
+    protected bool isPaused = false;
+
+    protected GameStates gameState;
     public GameStates GameState { get => gameState; }
 
-    private GameManager manager;
-    public GameManager Manager { get => manager; }
+    protected GameStates previousGameState;
 
-    private void Awake()
+    protected void Awake()
     {
         if (manager != null && manager != this)
         {
@@ -37,7 +34,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
     // Start is called before the first frame update
     void Start()
     {
@@ -47,28 +43,25 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        switch (GameState)
-        {
-            case GameStates.MainMenu:
-
-                break;
-
-            case GameStates.InGame:
-
-                break;
-
-            case GameStates.InGame_Dead:
-
-                break;
-
-            case GameStates.PauseScreen:
-
-                break;
-        }
+       
     }
-
-    public void ChangeGameState(GameStates providedGameState)
+    
+    public void TogglePause()
     {
-        gameState = providedGameState;
+        if (isPaused)
+        {
+            gameState = previousGameState;
+            Time.timeScale = 1.0f;
+        }
+        else
+        {
+            previousGameState = gameState;
+            gameState = GameStates.PauseScreen;
+            Time.timeScale = 0.0f;
+        }
+
+        isPaused = !isPaused;
     }
+
+
 }
