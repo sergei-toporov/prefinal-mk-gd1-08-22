@@ -6,6 +6,7 @@ using UnityEngine;
 public abstract class Enemy : Character
 {
     [SerializeField] protected Transform target;//Игрок
+    MainHero _mainHero;
     
     protected bool CheckDistanceToPlayer() 
     {
@@ -16,15 +17,17 @@ public abstract class Enemy : Character
         else
             return false;        
     }
-   
-
-    
-    private void OnCollisionEnter(Collision collision)
+    public override void OnCollisionEnter(Collision collision)
     {
-        if(collision.collider.CompareTag("Finish"))
+        if (collision.collider.CompareTag("PlayerArrow"))//Как дестроить стрелу если не попала никуда??
         {
             TakeDamage(10);
-            Debug.Log("Got it");
+            Destroy(collision.gameObject);
+            //Debug.Log("Got it");
         }
     }
+
+
+
+
 }

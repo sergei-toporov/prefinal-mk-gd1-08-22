@@ -7,15 +7,14 @@ public class MainHero : Character
     [SerializeField] Transform _shootingPoint;
     [SerializeField] GameObject _arrowPrefab;
     CharacterController _controller;
-    
+    //ShootingEnemy _shootingEnemy;    
 
-    public List<Enemy> enemiesInLevel;// Наверное такой лист должен приходить из LevelManager
+    //public List<Enemy> enemiesInLevel;// Наверное такой лист должен приходить из LevelManager
     Transform target;
     bool isMoving; //Написать булку что б не стрелял при движении
     void Start() 
     {
-        _controller = GetComponent<CharacterController>();
-        
+        _controller = GetComponent<CharacterController>();        
     }
 
     void FixedUpdate()
@@ -24,8 +23,6 @@ public class MainHero : Character
         AutoFindTarget();
         Attack();
     }
-        
-
 
     public override void Attack()// Сделать ObjectPool и что бы стрелял куда смотрит
     {
@@ -34,14 +31,13 @@ public class MainHero : Character
             reloadTimer += Time.deltaTime;
             if (reloadTime < reloadTimer)
             {
-                Debug.Log("Arrow");
+                //Debug.Log("Arrow");
                 var arrow = Instantiate(_arrowPrefab, _shootingPoint.position, _shootingPoint.rotation);
                 arrow.TryGetComponent<Rigidbody>(out Rigidbody rb);
                 rb.AddForce(_shootingPoint.forward * 10, ForceMode.VelocityChange);
                 reloadTimer = 0;
             }
         }
-
     }
 
     public override void Die()
@@ -50,30 +46,54 @@ public class MainHero : Character
     }
 
     public override void Move()
-    {
-        
+    {        
         float moveV = Input.GetAxis("Vertical");
         float moveH = Input.GetAxis("Horizontal");        
         _controller.SimpleMove(new Vector3(moveH, -9.81f, moveV) * movementSpeed);
-       
-
     }
     public void AutoFindTarget()// Потом наверное надо сделать ближайшего 
     {
-        for (int i = 0; i < enemiesInLevel.Count; i++)
+        Collider[] enemies = Physics.OverlapSphere(transform.position, attackDistance);
+        for (int i = 0; i < enemies.Length; i++)
         {
-            if (enemiesInLevel[i] == null)
+            if (enemies[i].CompareTag("Enemy"))
             {
-                enemiesInLevel.RemoveAt(i);
-            }
-            if (Vector3.Distance(transform.position, enemiesInLevel[i].transform.position) < attackDistance)
-            {                
-                target = enemiesInLevel[i].transform;
-                
-            }
+                target = enemies[i].gameObject.transform;
+            }            
         }
+        //for (int i = 0; i < enemiesInLevel.Count; i++)
+        //{
+        //    if (enemiesInLevel[i] == null)
+        //    {
+        //        enemiesInLevel.RemoveAt(i);
+        //    }
+        //    if (Vector3.Distance(transform.position, enemiesInLevel[i].transform.position) < attackDistance)
+        //    {                
+        //        target = enemiesInLevel[i].transform;
+                
+        //    }
+        //}
 
         if (target != null) 
         transform.LookAt(new Vector3(target.position.x, transform.position.y, target.position.z));
-    }    
+    }
+    public override void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.CompareTag("Enemy"))//Почему не работает с ShootingEnemy??
+        {
+            TakeDamage(20);//Как вставить damage из соответствующего класса
+            //Debug.Log("Got it");
+            //TakeDamage(collision.gameObject.GetComponent<MovingEnemy>().damage);
+        }
+        if (collision.collider.CompareTag("EnemyBullet"))
+        {
+            TakeDamage(10);
+            Destroy(collision.gameObject);
+            
+            //Debug.Log("Got it");
+
+        }
+
+    }
 }
+
