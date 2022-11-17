@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,9 +10,9 @@ public class MainHero : Character
     CharacterController _controller;
     //ShootingEnemy _shootingEnemy;    
 
-    //public List<Enemy> enemiesInLevel;// Наверное такой лист должен приходить из LevelManager
+    //public List<Enemy> enemiesInLevel;// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ LevelManager
     Transform target;
-    bool isMoving; //Написать булку что б не стрелял при движении
+    bool isMoving; //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     void Start() 
     {
         _controller = GetComponent<CharacterController>();        
@@ -24,7 +25,7 @@ public class MainHero : Character
         Attack();
     }
 
-    public override void Attack()// Сделать ObjectPool и что бы стрелял куда смотрит
+    public override void Attack()// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ ObjectPool пїЅ пїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     {
         if (!isMoving)
         {
@@ -42,7 +43,7 @@ public class MainHero : Character
 
     public override void Die()
     {
-        Destroy(gameObject);//Временно
+        Destroy(gameObject);//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     }
 
     public override void Move()
@@ -51,7 +52,7 @@ public class MainHero : Character
         float moveH = Input.GetAxis("Horizontal");        
         _controller.SimpleMove(new Vector3(moveH, -9.81f, moveV) * movementSpeed);
     }
-    public void AutoFindTarget()// Потом наверное надо сделать ближайшего 
+    public void AutoFindTarget()// пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ 
     {
         Collider[] enemies = Physics.OverlapSphere(transform.position, attackDistance);
         for (int i = 0; i < enemies.Length; i++)
@@ -79,9 +80,9 @@ public class MainHero : Character
     }
     public override void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.CompareTag("Enemy"))//Почему не работает с ShootingEnemy??
+        if (collision.collider.CompareTag("Enemy"))//пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ ShootingEnemy??
         {
-            TakeDamage(20);//Как вставить damage из соответствующего класса
+            TakeDamage(20);//пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ damage пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
             //Debug.Log("Got it");
             //TakeDamage(collision.gameObject.GetComponent<MovingEnemy>().damage);
         }

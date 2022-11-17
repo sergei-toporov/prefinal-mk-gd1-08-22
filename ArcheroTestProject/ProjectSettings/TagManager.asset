@@ -7,6 +7,10 @@ TagManager:
   - EnemyBullet
   - Enemy
   - PlayerArrow
+  - Runner
+  - Archer
+  - Door
+  - Thorn
   layers:
   - Default
   - TransparentFX
