@@ -6,6 +6,7 @@ public class MainHero : Character
 {
     [SerializeField] Transform _shootingPoint;
     [SerializeField] GameObject _arrowPrefab;
+    [SerializeField] FloatingJoystick joystick;
     CharacterController _controller;
     //ShootingEnemy _shootingEnemy;    
 
@@ -21,7 +22,7 @@ public class MainHero : Character
     {
         Move();
         AutoFindTarget();
-        Attack();
+        Attack();      
     }
 
     public override void Attack()// Сделать ObjectPool и что бы стрелял куда смотрит
@@ -37,7 +38,7 @@ public class MainHero : Character
                 rb.AddForce(_shootingPoint.forward * 10, ForceMode.VelocityChange);
                 reloadTimer = 0;
             }
-        }
+        }       
     }
 
     public override void Die()
@@ -47,9 +48,10 @@ public class MainHero : Character
 
     public override void Move()
     {        
-        float moveV = Input.GetAxis("Vertical");
-        float moveH = Input.GetAxis("Horizontal");        
+        float moveV = joystick.Vertical;
+        float moveH = joystick.Horizontal;        
         _controller.SimpleMove(new Vector3(moveH, -9.81f, moveV) * movementSpeed);
+    
     }
     public void AutoFindTarget()// Потом наверное надо сделать ближайшего 
     {
