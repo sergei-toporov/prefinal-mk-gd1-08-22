@@ -15,7 +15,7 @@ public class ShootingEnemy : Enemy
     {
         if (CheckDistanceToPlayer()) 
         {
-            Debug.Log("!!!");
+            
             reloadTimer += Time.deltaTime;
             if (reloadTime < reloadTimer)
             {
@@ -36,7 +36,16 @@ public class ShootingEnemy : Enemy
     public override void Move()
     {
         throw new System.NotImplementedException();
-    }        
+    }
+
+    //public override void OnCollisionEnter(Collision collision)
+    //{
+    //    if (collision.collider.CompareTag("PlayerArrow"))
+    //    {
+    //        TakeDamage(10);
+    //        Debug.Log("Got it");
+    //    }
+    //}
 
     // Start is called before the first frame update
     void Start()

@@ -7,8 +7,7 @@ public class MovingEnemy : Enemy
     public override void Attack()
     {
         if (CheckDistanceToPlayer()) 
-        {
-            Debug.Log("!!!");
+        {            
             transform.position = Vector3.MoveTowards(transform.position, target.position, movementSpeed * Time.deltaTime);
         }
     }
@@ -23,7 +22,15 @@ public class MovingEnemy : Enemy
         throw new System.NotImplementedException();
     }
 
-    
+    //public override void OnCollisionEnter(Collision collision)
+    //{
+    //    if (collision.collider.CompareTag("PlayerArrow"))
+    //    {
+    //        TakeDamage(10);
+    //        Debug.Log("Got it");
+    //    }
+    //}
+
 
     // Start is called before the first frame update
     void Start()

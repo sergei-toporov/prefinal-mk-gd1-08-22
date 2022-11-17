@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class Character : MonoBehaviour
 {
     [SerializeField] protected int health;
-    [SerializeField] protected int damage;
+    [SerializeField] public int damage;
     [SerializeField] protected float movementSpeed;
     [SerializeField] protected float reloadTime;
     [SerializeField] protected float attackDistance;
@@ -22,4 +22,6 @@ public abstract class Character : MonoBehaviour
         }
     }
     public abstract void Die();
+
+    public abstract void OnCollisionEnter(Collision collision);
 }
