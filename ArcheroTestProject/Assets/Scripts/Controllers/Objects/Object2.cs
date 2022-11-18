@@ -17,4 +17,9 @@ public class Object2 : ObjectControllerBase
         hp -= Random.Range(1.0f, 5.0f);
         base.OnKeySpaceAction();
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        
+    }
 }

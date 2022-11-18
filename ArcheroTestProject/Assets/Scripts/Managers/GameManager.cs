@@ -7,7 +7,7 @@ public enum GameStates
     MainMenu,
     InGame,
     InGame_Dead,
-    PauseScreen,
+    Paused,
 }
 
 public class GameManager : MonoBehaviour
@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        OnEnablePause();
     }
 
     // Update is called once per frame
@@ -45,23 +45,52 @@ public class GameManager : MonoBehaviour
     {
        
     }
-    
-    public void TogglePause()
-    {
-        if (isPaused)
-        {
-            gameState = previousGameState;
-            Time.timeScale = 1.0f;
-        }
-        else
-        {
-            previousGameState = gameState;
-            gameState = GameStates.PauseScreen;
-            Time.timeScale = 0.0f;
-        }
 
-        isPaused = !isPaused;
+    public void OnEnablePause()
+    {
+        PauseGame();
     }
+
+    public void OnDisablePause()
+    {
+        UnpauseGame();
+    }
+
+    public void OnGameExit()
+    {
+        Application.Quit();
+    }
+
+    public void OnGameReset()
+    {
+        ResetGame();
+    }
+
+    protected void PauseGame()
+    {
+        Time.timeScale = 0.0f;
+        isPaused = true;
+        Debug.Log("isPaused: " + isPaused);
+        Debug.Log("Game paused.");
+    }
+
+    protected void UnpauseGame()
+    {
+        Time.timeScale = 1.0f;
+        isPaused = false;
+        Debug.Log("isPaused: " + isPaused);
+        Debug.Log("Game unpaused.");
+    }
+
+    protected void ResetGame()
+    {
+        Debug.Log("Game reset.");
+        foreach (Character character in GameObject.FindObjectsOfType<Character>())
+        {
+            character.ResetPosition();
+        }
+    }
+
 
 
 }

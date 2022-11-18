@@ -6,7 +6,10 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
 using Unity.VisualScripting;
+using System;
+using UnityEngine.Events;
 
+[Serializable]
 public class EventManager : MonoBehaviour
 {
     protected static EventManager manager;
@@ -23,6 +26,18 @@ public class EventManager : MonoBehaviour
 
     [SerializeField] protected GameEvent onPauseToggle;
     public GameEvent OnPauseToggle { get => onPauseToggle; }
+
+    [SerializeField] protected GameEvent enablePasue;
+    public GameEvent EnablePause { get => enablePasue; }
+
+    [SerializeField] protected GameEvent disablePause;
+    public GameEvent DisablePause { get => disablePause; }
+
+    [SerializeField] protected GameEvent exitGame;
+    public GameEvent ExitGame { get => exitGame; }
+
+    [SerializeField] protected GameEvent resetGame;
+    public GameEvent ResetGame { get => resetGame; }
 
     protected void Awake()
     {

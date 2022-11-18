@@ -7,7 +7,7 @@ public abstract class Enemy : Character
 {
     [SerializeField] protected Transform target;//Игрок
     MainHero _mainHero;
-    
+
     protected bool CheckDistanceToPlayer() 
     {
         if (Vector3.Distance(transform.position, target.position) < attackDistance) 

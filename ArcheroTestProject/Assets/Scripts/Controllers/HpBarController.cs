@@ -16,7 +16,7 @@ public class HpBarController : MonoBehaviour
         if (transform.parent != null && transform.parent.TryGetComponent(out ObjectControllerBase parObject))
         {
             parent = parObject;
-            OnParentHpChange();
+            OnParentHpChange(gameObject);
         }
         else
         {
@@ -24,8 +24,9 @@ public class HpBarController : MonoBehaviour
         }
     }
 
-    public void OnParentHpChange()
+    public void OnParentHpChange(GameObject go)
     {
+        Debug.Log("GameObject: " + go.name);
         string tmpText = $"{parent.HP} / {parent.InitialHP}";
         text.text = tmpText;
     }
