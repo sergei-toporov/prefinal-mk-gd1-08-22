@@ -39,7 +39,7 @@ abstract public class ObjectControllerBase : MonoBehaviour
 
     public virtual void OnKeySpaceAction()
     {
-        Debug.Log("Key 'Space' by " + gameObject.name);
+        Debug.Log("Key 'Space' pressed by " + gameObject.name);
         EventManager.Manager.OnHPChange.TriggerEvent();
     }
 

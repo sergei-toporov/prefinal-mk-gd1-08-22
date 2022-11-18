@@ -13,9 +13,10 @@ public class MainHero : Character
     //public List<Enemy> enemiesInLevel;// Ќаверное такой лист должен приходить из LevelManager
     Transform target;
     bool isMoving; //Ќаписать булку что б не стрел€л при движении
+
     void Start() 
     {
-        _controller = GetComponent<CharacterController>();        
+        _controller = GetComponent<CharacterController>();
     }
 
     void FixedUpdate()
