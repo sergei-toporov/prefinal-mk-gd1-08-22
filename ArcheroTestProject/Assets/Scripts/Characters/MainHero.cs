@@ -7,25 +7,27 @@ public class MainHero : Character
 {
     [SerializeField] Transform _shootingPoint;
     [SerializeField] GameObject _arrowPrefab;
+    [SerializeField] FloatingJoystick joystick;
     CharacterController _controller;
     //ShootingEnemy _shootingEnemy;    
 
-    //public List<Enemy> enemiesInLevel;// �������� ����� ���� ������ ��������� �� LevelManager
+    //public List<Enemy> enemiesInLevel;// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ LevelManager
     Transform target;
-    bool isMoving; //�������� ����� ��� � �� ������� ��� ��������
+    bool isMoving; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+
     void Start() 
     {
-        _controller = GetComponent<CharacterController>();        
+        _controller = GetComponent<CharacterController>();
     }
 
     void FixedUpdate()
     {
         Move();
         AutoFindTarget();
-        Attack();
+        Attack();      
     }
 
-    public override void Attack()// ������� ObjectPool � ��� �� ������� ���� �������
+    public override void Attack()// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ObjectPool ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     {
         if (!isMoving)
         {
@@ -38,21 +40,22 @@ public class MainHero : Character
                 rb.AddForce(_shootingPoint.forward * 10, ForceMode.VelocityChange);
                 reloadTimer = 0;
             }
-        }
+        }       
     }
 
     public override void Die()
     {
-        Destroy(gameObject);//��������
+        Destroy(gameObject);//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     }
 
     public override void Move()
     {        
-        float moveV = Input.GetAxis("Vertical");
-        float moveH = Input.GetAxis("Horizontal");        
+        float moveV = joystick.Vertical;
+        float moveH = joystick.Horizontal;        
         _controller.SimpleMove(new Vector3(moveH, -9.81f, moveV) * movementSpeed);
+    
     }
-    public void AutoFindTarget()// ����� �������� ���� ������� ���������� 
+    public void AutoFindTarget()// ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
     {
         Collider[] enemies = Physics.OverlapSphere(transform.position, attackDistance);
         for (int i = 0; i < enemies.Length; i++)
@@ -80,9 +83,9 @@ public class MainHero : Character
     }
     public override void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.CompareTag("Enemy"))//������ �� �������� � ShootingEnemy??
+        if (collision.collider.CompareTag("Enemy"))//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ ShootingEnemy??
         {
-            TakeDamage(20);//��� �������� damage �� ���������������� ������
+            TakeDamage(20);//ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ damage ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             //Debug.Log("Got it");
             //TakeDamage(collision.gameObject.GetComponent<MovingEnemy>().damage);
         }
